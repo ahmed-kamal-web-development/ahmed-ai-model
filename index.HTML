@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <!-- 增强移动端视口设置：确保缩放流畅、禁用自动缩放干扰，同时保留用户缩放能力 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <title>طلاب كلية الصيدلة | القائمة الرسمية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 极致流畅基础设置：提升移动端滚动与渲染性能 */
+        body {
+            background-color: #ffffff;
+            font-family: 'Segoe UI', 'Roboto', system-ui, 'Lato', 'Georgia', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1e2a3e;
+            line-height: 1.5;
+            padding: 1.5rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* 主卡片 – 轻盈且适应任何屏幕宽度 */
+        .formal-card {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03), 0 2px 4px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* 头部区域 – 清晰呼吸感 */
+        .header-section {
+            padding: 2rem 2rem 1rem 2rem;
+            border-bottom: 2px solid #eef2f8;
+            text-align: center;
+        }
+
+        .header-section h1 {
+            font-size: clamp(1.6rem, 6vw, 2.1rem);
+            font-weight: 650;
+            letter-spacing: -0.2px;
+            color: #0a2b3c;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            margin-bottom: 0.4rem;
+        }
+
+        .header-section .sub {
+            font-size: 0.9rem;
+            color: #4a6a85;
+            border-top: 1px solid #e6edf4;
+            display: inline-block;
+            padding-top: 0.65rem;
+            font-weight: 450;
+            letter-spacing: 0.3px;
+        }
+
+        /* 优雅底部信息 */
+        .footer-note {
+            padding: 1rem 2rem;
+            text-align: right;
+            font-size: 0.85rem;
+            color: #6c7f9c;
+            border-top: 1px solid #eef2f8;
+            background-color: #fefefe;
+            font-weight: 450;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .footer-note span:first-child {
+            font-family: monospace;
+            letter-spacing: 0.3px;
+            background: #f5f9ff;
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+        }
+        .footer-note .date-badge {
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        /* 表格外层 – 专门为移动端平滑滚动设计 */
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;  /* iOS 平滑回弹 */
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+        }
+        .table-wrapper::-webkit-scrollbar {
+            height: 5px;
+        }
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        /* 表格核心 – 整洁且完全自适应，保留优雅边框 */
+        .students-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+            background: white;
+            min-width: 300px; /* 保证极小屏有基础空间 */
+        }
+
+        /* 表头稳重风格 */
+        .students-table thead tr {
+            background: #fafcff;
+            border-bottom: 2px solid #e2e9f2;
+        }
+
+        .students-table th {
+            text-align: left;
+            padding: 1.2rem 1.5rem;
+            font-weight: 650;
+            font-size: 0.88rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #2c4f70;
+            background-color: #fbfdff;
+            font-family: 'Segoe UI', 'Roboto', system-ui;
+        }
+
+        .students-table td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #edf2f9;
+            vertical-align: middle;
+            font-size: 1rem;
+            transition: background 0.15s ease;
+            word-break: break-word;      /* 保障长英文名自动换行，避免强制溢出 */
+        }
+
+        /* 姓名列 – 优雅加粗 */
+        .student-name {
+            font-weight: 540;
+            font-family: 'Lato', 'Segoe UI', system-ui;
+            letter-spacing: 0.2px;
+            color: #1e3a4d;
+        }
+
+        /* 学号列 – 等宽清晰，略有底色提升识别 */
+        .student-id {
+            font-family: 'Courier New', 'SF Mono', 'Fira Code', monospace;
+            font-weight: 520;
+            font-size: 0.92rem;
+            letter-spacing: 0.3px;
+            color: #1a5679;
+            background-color: #fefefe;
+        }
+
+        /* hover 交互轻提示 (桌面友好) */
+        .students-table tbody tr:hover td {
+            background-color: #f5faff;
+            transition: 0.08s linear;
+        }
+
+        /* 柔和入场动画，优化感知性能 (移动端依然平滑) */
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .students-table tbody tr {
+            animation: fadeSlideUp 0.38s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+            opacity: 0;
+        }
+
+        /* 递进延迟 – 自然连贯 */
+        .students-table tbody tr:nth-child(1) { animation-delay: 0.02s; }
+        .students-table tbody tr:nth-child(2) { animation-delay: 0.05s; }
+        .students-table tbody tr:nth-child(3) { animation-delay: 0.08s; }
+        .students-table tbody tr:nth-child(4) { animation-delay: 0.11s; }
+        .students-table tbody tr:nth-child(5) { animation-delay: 0.14s; }
+        .students-table tbody tr:nth-child(6) { animation-delay: 0.17s; }
+        .students-table tbody tr:nth-child(7) { animation-delay: 0.20s; }
+        .students-table tbody tr:nth-child(8) { animation-delay: 0.23s; }
+        .students-table tbody tr:nth-child(9) { animation-delay: 0.26s; }
+        .students-table tbody tr:nth-child(10) { animation-delay: 0.29s; }
+
+        /* ============================================= */
+        /* 移动端极致优化：触摸舒适、字号适配、无横向错位 */
+        /* ============================================= */
+        @media (max-width: 720px) {
+            body {
+                padding: 0.85rem;
+            }
+            .formal-card {
+                border-radius: 24px;
+            }
+            .header-section {
+                padding: 1.3rem 1rem 0.8rem;
+            }
+            .header-section h1 {
+                font-size: 1.6rem;
+            }
+            .header-section .sub {
+                font-size: 0.78rem;
+            }
+            .students-table th,
+            .students-table td {
+                padding: 0.85rem 1rem;
+            }
+            .students-table th {
+                font-size: 0.75rem;
+                padding: 0.9rem 1rem;
+            }
+            .student-name {
+                font-size: 0.92rem;
+                font-weight: 540;
+            }
+            .student-id {
+                font-size: 0.8rem;
+                letter-spacing: 0.2px;
+            }
+            .footer-note {
+                padding: 0.8rem 1rem;
+                font-size: 0.75rem;
+            }
+            .footer-note span:first-child {
+                font-size: 0.7rem;
+                padding: 0.15rem 0.6rem;
+            }
+        }
+
+        /* 超小屏幕 (最大宽度 480px) 确保每个单词都自然折行，滑动流畅 */
+        @media (max-width: 480px) {
+            body {
+                padding: 0.65rem;
+            }
+            .students-table th,
+            .students-table td {
+                padding: 0.7rem 0.85rem;
+            }
+            .students-table td {
+                font-size: 0.85rem;
+            }
+            .student-id {
+                font-size: 0.75rem;
+                word-break: break-all;
+            }
+            .student-name {
+                font-size: 0.85rem;
+                line-height: 1.35;
+            }
+            .header-section h1 {
+                font-size: 1.4rem;
+            }
+            .footer-note {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+                gap: 0.3rem;
+            }
+            .footer-note span:first-child {
+                align-self: flex-start;
+            }
+        }
+
+        /* 针对 375px 以下微调让表格内容更宽松 */
+        @media (max-width: 380px) {
+            .students-table th,
+            .students-table td {
+                padding: 0.65rem 0.7rem;
+            }
+            .student-id {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* 保证长英文名字自动换行且美观 */
+        .students-table td:first-child {
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        /* 学号列也可换行，避免溢出 */
+        .students-table td:last-child {
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        /* 增强移动端点击区域舒适感（仅针对可交互元素，无链接但保持友好） */
+        .students-table tbody tr {
+            cursor: default;
+        }
+        
+        /* 为更好的触控滚动体验，增加轻微圆角及硬件加速提示 */
+        .table-wrapper {
+            will-change: transform;
+        }
+    </style>
+</head>
+<body>
+<div class="formal-card">
+    <div class="header-section">
+        <!-- 修正拼写并保持学术感：Pharmacy Faculty + 阿拉伯语优雅副标题 -->
+        <h1>💊 Name of Participants</h1>
+        <h3>Physical Pharmacy Extracurricular</h3>
+    </div>
+
+    <div class="table-wrapper">
+        <table class="students-table">
+            <thead>
+                <tr>
+                    <th>📖 Student Name</th>
+                    <th>🆔  ID Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 学生数据严格按照要求排序，完整展示 -->
+                <tr>
+                    <td class="student-name">Jana Emad Samir</td>
+                    <td class="student-id">25100910</td>
+                </tr>
+                <tr>
+                    <td class="student-name">Haneen Mohammed Kamal</td>
+                    <td class="student-id">25100911</td>
+                </tr>
+                <tr>
+                    <td class="student-name">Salma Sameh Farid</td>
+                    <td class="student-id">25100912</td>
+                </tr>
+                <tr>
+                    <td class="student-name">Marwan Essam Fathy</td>
+                    <td class="student-id">25100913</td>
+                </tr>
+                <tr>
+                    <td class="student-name">Merna Ehab</td>
+                    <td class="student-id">25100914</td>
+                </tr>
+                <tr>
+                    <td class="student-name">Jana Ramadan</td>
+                    <td class="student-id">25100916</td>
+                </tr>
+                <tr>
+                    <td class="student-name">Monaya Mohamed El-Sayed</td>
+                    <td class="student-id">25100917</td>
+                </tr>
+                <tr>
+                    <td class="student-name">Raghdah Abdulrahim Hassan</td>
+                    <td class="student-id">25100919</td>
+                </tr>
+                <tr>
+                    <td class="student-name">Menna Allah Mohamed </td>
+                    <td class="student-id">25100920</td>
+                </tr>
+                <tr>
+                    <td class="student-name">Sarah Ghanem Hammad</td>
+                    <td class="student-id">25100921</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-note">
+        <span>📋 إجمالي الطلاب المسجلين : 10</span>
+    </div>
+</div>
+</body>
+</html>
